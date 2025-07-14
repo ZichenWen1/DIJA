@@ -1,2 +1,2 @@
 # DIJA
-coda coming soon
+code coming soon
