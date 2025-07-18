@@ -1,0 +1,43 @@
+default_method_hyperparameters:
+  min_fontsize: 10
+  max_fontsize: 20
+
+llava_v1_5:
+  test_cases_batch_size: 1
+  num_test_cases_per_behavior: 1
+  image_width: 336
+  image_height: 336
+  roi_x: 0
+  roi_y: 0
+  roi_width: 336
+  roi_height: 336
+
+instructblip:
+  test_cases_batch_size: 1
+  num_test_cases_per_behavior: 1
+  image_width: 224
+  image_height: 224
+  roi_x: 0
+  roi_y: 0
+  roi_width: 224
+  roi_height: 224
+
+qwen_vl_chat:
+  test_cases_batch_size: 1
+  num_test_cases_per_behavior: 1
+  image_width: 448
+  image_height: 448
+  roi_x: 0
+  roi_y: 0
+  roi_width: 448
+  roi_height: 448
+
+gpt4v:
+  test_cases_batch_size: 1
+  num_test_cases_per_behavior: 1
+  image_width: 224
+  image_height: 224
+  roi_x: 0
+  roi_y: 0
+  roi_width: 224
+  roi_height: 224
