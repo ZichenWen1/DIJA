@@ -19,28 +19,28 @@ cd $HOME/DIJA/run_harmbench || { echo "Failed to change directory to run_harmben
 
 # Define paths based on model name
 if [[ "$model_name" == *"llada_instruct"* ]]; then
-    model_path="$HOME/hf_models/LLaDA-8B-Instruct"  # TODO: Update this path
+    model_path="$HOME/DIJA/hf_models/LLaDA-8B-Instruct"  # TODO: Update this path
     python_script="models/harmbench_llada.py"
     steps=128
     gen_length=128
     mask_id=126336
     mask_counts=36
 elif [[ "$model_name" == *"llada_1.5"* ]]; then
-    model_path="$HOME/hf_models/LLaDA-1.5" # TODO: Update this path
+    model_path="$HOME/DIJA/hf_models/LLaDA-1.5" # TODO: Update this path
     python_script="models/harmbench_llada.py"
     steps=128
     gen_length=128
     mask_id=126336
     mask_counts=36
 elif [[ "$model_name" == *"dream_instruct"* ]]; then
-    model_path="$HOME/hf_models/Dream-v0-Instruct-7B"  # TODO: Update this path
+    model_path="$HOME/DIJA/hf_models/Dream-v0-Instruct-7B"  # TODO: Update this path
     python_script="models/harmbench_dream.py"
     steps=64
     gen_length=64
     mask_id=151666
     mask_counts=36
 elif [[ "$model_name" == *"mmada_mixcot"* ]]; then
-    model_path="$HOME/hf_models/MMaDA-8B-MixCoT"  # TODO: Update this path
+    model_path="$HOME/DIJA/hf_models/MMaDA-8B-MixCoT"  # TODO: Update this path
     python_script="models/harmbench_mmada.py"
     steps=128
     gen_length=128
@@ -69,11 +69,9 @@ python ${python_script} \
   --attack_method "${attack_method}" \
   --defense_method "${defense_method}"
 
-# Navigate to evaluation directory
-cd $HOME/DIJA/run_harmbench || { echo "Failed to change directory to HarmBench"; exit 1; }
 
 # Define evaluation paths
-cls_path="$HOME/hf_models/HarmBench-Llama-2-13b-cls"
+cls_path="$HOME/DIJA/hf_models/HarmBench-Llama-2-13b-cls"
 completions_path="${output_json}"
 save_path="$HOME/DIJA/run_harmbench/eval_results/eval_results_${model_name}_${attack_method}_attack_${defense_method}_defense_${version}.json"
 

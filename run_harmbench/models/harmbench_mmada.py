@@ -138,8 +138,6 @@ def main():
 
     with torch.no_grad():
         for idx, item in enumerate(tqdm(data, desc="Processing data", total=len(data))):
-            if idx > 20:
-                break
             behavior_id = item['BehaviorID']
             vanilla_behavior = item['Behavior']
             refined_behavior = item.get('Refined_behavior', '')

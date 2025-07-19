@@ -8,8 +8,7 @@ import logging
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModel
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
-sys.path.insert(0, PROJECT_ROOT)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 from utility.generate_function import generate_llada
 from defense_utils import Defender
 

@@ -5,7 +5,6 @@ import torch
 from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 
 import bpe
-sys.path.append("/mnt/petrelfs/wenzichen/DIJA/run_harmbench")
 import utility.model as model_utils
 from colorama import Fore
 

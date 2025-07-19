@@ -5,7 +5,7 @@
 cd $HOME/DIJA/run_harmbench/refine_prompt
 
 version=$1
-hf_model_path="$HOME/hf_models/Qwen2.5-7B-Instruct"
+hf_model_path="$HOME/DIJA/hf_models/Qwen2.5-7B-Instruct"
 api_model_name=""
  
 
