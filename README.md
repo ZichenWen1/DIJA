@@ -45,7 +45,7 @@ Haoyun Xu<sup>1</sup>,
 - 💥 We conduct comprehensive experiments demonstrating the effectiveness of DIJA across multiple dLLMs compared with existing attack methods, highlighting critical gaps in current alignment strategies and exposing urgent security vulnerabilities in existing dLLM architectures that require immediate addressing.
 
 <p align='center'>
-<img src='./assets/attack_cases.jpg' alt='mask' width='900px'>
+<img src='./assets/attack_cases.jpg' alt='mask' width='850px'>
 </p>
 
 ## 📊 Performance
@@ -53,15 +53,15 @@ Haoyun Xu<sup>1</sup>,
 - 🎯 For the more secure Dream-Instruct, DIJA achieves an improvement of up to 78.5% in ASR-e on JailbreakBench over the best baseline, ReNeLLM, and a 37.7% improvement in StrongREJECT score.
 
 <p align='center'>
-<img src='./assets/harmbench_exp.jpg' alt='mask' width='900px'>
+<img src='./assets/harmbench_exp.jpg' alt='mask' width='850px'>
 </p>
 
 <p align='center'>
-<img src='./assets/jailbreakbench_exp.jpg' alt='mask' width='900px'>
+<img src='./assets/jailbreakbench_exp.jpg' alt='mask' width='850px'>
 </p>
 
 <p align='center'>
-<img src='./assets/strongreject_exp.jpg' alt='mask' width='900px'>
+<img src='./assets/strongreject_exp.jpg' alt='mask' width='850px'>
 </p>
 
 
