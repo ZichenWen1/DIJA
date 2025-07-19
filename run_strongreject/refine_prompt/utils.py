@@ -10,11 +10,12 @@ os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 import json
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from benchmarks.jailbreakbench.src.jailbreakbench.dataset import read_dataset
+from benchmarks.strong_reject.strong_reject.load_datasets import load_strongreject_small, load_strongreject
 
 def load_prompt_template(path: str) -> str:
     with open(path, 'r', encoding='utf-8') as f:
         return f.read()
+
 
 def apply_prompt_template(vanilla_prompt: str, template: str) -> str:
     return template.format(prompt=vanilla_prompt)
@@ -82,35 +83,32 @@ class Refiner:
 
     def run_refinement_hf(self, max_new_tokens=100):
 
-        dataset = read_dataset(split="harmful")
-        # Access the entries of the JBB-Behaviors dataset
-        behaviors = dataset.behaviors
-        goals = dataset.goals
-        targets = dataset.targets
-        categories = dataset.categories
+        forbidden_prompt_dataset = load_strongreject()
+        forbidden_prompts = forbidden_prompt_dataset['forbidden_prompt']
+        sources = forbidden_prompt_dataset['source']
+        categories = forbidden_prompt_dataset['category']
 
         refined_list = []
 
         with torch.no_grad():
-            for i in tqdm(range(len(goals)), desc="processing items..."):
+            for i in tqdm(range(len(forbidden_prompts)), desc="processing items..."):
                 
-                # if i > 3:
-                #     break
+                if i > 3:
+                    break
 
-                behavior = behaviors[i]
-                goal = goals[i]
-                target = targets[i]
+                forbidden_prompt = forbidden_prompts[i]
+                source = sources[i]
                 category = categories[i]
 
-                prompt = self.apply_prompt_template(goal, self.template_str)
+                prompt = self.apply_prompt_template(forbidden_prompt, self.template_str)
                 response = self.qwen_generate(prompt, max_new_tokens)
                 logging.info(f"[Refined]: {response}")
+
                 refined_list.append({
-                    "behavior": behavior,
-                    "target": target,
+                    "source": source,
                     "category": category,
-                    "goal": goal,
-                    "refined_goal": response
+                    "vanilla prompt": forbidden_prompt,
+                    "refined prompt": response
                 })
 
         os.makedirs(os.path.dirname(self.output_json), exist_ok=True)
@@ -119,23 +117,20 @@ class Refiner:
         logging.info(f"Saved refined goals to {self.output_json}")
 
     def run_refinement_api(self, max_new_tokens=120):
-        dataset = read_dataset(split="harmful")
-        # Access the entries of the JBB-Behaviors dataset
-        behaviors = dataset.behaviors
-        goals = dataset.goals
-        targets = dataset.targets
-        categories = dataset.categories
+        forbidden_prompt_dataset = load_strongreject()
+        forbidden_prompts = forbidden_prompt_dataset['forbidden_prompt']
+        sources = forbidden_prompt_dataset['source']
+        categories = forbidden_prompt_dataset['category']
 
         refined_list = []
 
-        for i in tqdm(range(len(goals)), desc="processing items..."):
+        for i in tqdm(range(len(forbidden_prompts)), desc="processing items..."):
 
-            behavior = behaviors[i]
-            goal = goals[i]
-            target = targets[i]
+            forbidden_prompt = forbidden_prompts[i]
+            source = sources[i]
             category = categories[i]
 
-            prompt = self.apply_prompt_template(goal, self.template_str)
+            prompt = self.apply_prompt_template(forbidden_prompt, self.template_str)
 
             for i in range(5):
                 if i == 0:
@@ -153,11 +148,10 @@ class Refiner:
             logging.info(f"[Refined]: {response}")
 
             refined_list.append({
-                "behavior": behavior,
-                "target": target,
+                "source": source,
                 "category": category,
-                "goal": goal,
-                "refined_goal": response
+                "vanilla prompt": forbidden_prompt,
+                "refined prompt": response
             })
 
         os.makedirs(os.path.dirname(self.output_json), exist_ok=True)
