@@ -18,7 +18,7 @@ OUTPUT_FILE="/mnt/petrelfs/wenzichen/diffusion_lm/LLaDA/run_harmbench/HS_results
 JUDGE_MODEL="gpt-4o"
 POLICY_MODEL="gpt-4o"
 NUM_PROCESSES=400
-API_KEY=sk-dPUeaXawcoYL7ZkQ8bd89QHgUvXmYF1SboQs7n80uKiqTKcZ
+API_KEY=""
 
 
 while getopts ":i:o:j:p:m:d:k:h" opt; do
