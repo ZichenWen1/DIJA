@@ -92,10 +92,6 @@ class Refiner:
 
         with torch.no_grad():
             for i in tqdm(range(len(forbidden_prompts)), desc="processing items..."):
-                
-                if i > 3:
-                    break
-
                 forbidden_prompt = forbidden_prompts[i]
                 source = sources[i]
                 category = categories[i]

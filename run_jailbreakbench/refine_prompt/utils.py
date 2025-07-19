@@ -93,10 +93,6 @@ class Refiner:
 
         with torch.no_grad():
             for i in tqdm(range(len(goals)), desc="processing items..."):
-                
-                # if i > 3:
-                #     break
-
                 behavior = behaviors[i]
                 goal = goals[i]
                 target = targets[i]

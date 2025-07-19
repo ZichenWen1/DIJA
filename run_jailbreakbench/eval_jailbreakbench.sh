@@ -10,7 +10,7 @@ attack_method=$1
 defense_method=$2
 model_name=$3
 version=$4
-together_api_key=""
+together_api_key=""  # TODO: set your Together API key here
 
 # Automatically select an idle GPU
 export CUDA_VISIBLE_DEVICES=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | awk '{if ($1 == 0) print NR-1}' | head -n 1)

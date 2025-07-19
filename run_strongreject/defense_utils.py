@@ -13,7 +13,7 @@ FORCE_RESET = bool(int(os.getenv("FORCE_RESET", "0")))
 
 
 class PPL_calculator:
-    def __init__(self, model='~/hf_models/gpt2', device = "cuda", max_length=None,  stride=None):
+    def __init__(self, model='~/DIJA/hf_models/gpt2', device = "cuda", max_length=None,  stride=None):
         self.model_id = model
         assert 'gpt2' in model, "Only GPT-2 models are supported"
         self.device = device

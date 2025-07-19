@@ -6,14 +6,15 @@ cd $HOME/DIJA/run_harmbench/refine_prompt
 
 version=$1
 hf_model_path="$HOME/DIJA/hf_models/Qwen2.5-7B-Instruct"
+
+# TODO: Set your API key and base URL if using an API model
 api_model_name=""
- 
+api_key=""
+base_url=""
 
 prompt_template_path="$HOME/DIJA/run_harmbench/refine_prompt/redteam_prompt_template.txt"
 attack_prompt="$HOME/DIJA/benchmarks/HarmBench/data/behavior_datasets/harmbench_behaviors_text_all.csv"
-output_json="/mnt/petrelfs/wenzichen/DIJA/run_harmbench/refine_prompt/harmbench_behaviors_text_all_refined_${version}.json"
-api_key=""
-base_url=""
+output_json="$HOME/DIJA/run_harmbench/refine_prompt/harmbench_behaviors_text_all_refined_${version}.json"
 max_new_tokens=200
 
 

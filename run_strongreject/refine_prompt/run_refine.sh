@@ -6,14 +6,16 @@ cd $HOME/DIJA/run_strongreject/refine_prompt
 
 version=$1
 hf_model_path="$HOME/DIJA/hf_models/Qwen2.5-7B-Instruct"
+
+# TODO: Set your API key and base URL if using an API model
 api_model_name=""
+api_key="" # TODO: set your API key here
+base_url="" # TODO: set your API base URL here
  
 
 prompt_template_path="$HOME/DIJA/run_strongreject/refine_prompt/redteam_prompt_template.txt"
 attack_prompt=""
-output_json="/mnt/petrelfs/wenzichen/DIJA/run_strongreject/refine_prompt/strongreject_data_refined_${version}.json"
-api_key="" # TODO: set your API key here
-base_url="" # TODO: set your API base URL here
+output_json="$HOME/DIJA/run_strongreject/refine_prompt/strongreject_data_refined_${version}.json"
 max_new_tokens=200
 
 
