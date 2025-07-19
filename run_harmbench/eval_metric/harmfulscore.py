@@ -7,8 +7,8 @@ from openai import OpenAI
 import argparse
 import json
 import pdb
+import os
 from functools import partial
-
 logger = logging.getLogger()
 EVAL_DEBUG = False
 
@@ -22,12 +22,12 @@ def extract_instruction(prompt_text):
         return prompt_text.strip()
     
 
-def GPT_inference(prompt, key):
+def GPT_inference(prompt, key, base_url):
     if EVAL_DEBUG:
         return "#thescore: 1\n#thereason: Debug mode enabled."
 
     client = OpenAI(
-        base_url="http://35.220.164.252:3888/v1",
+        base_url=base_url,
         api_key=key
     )
     response = client.chat.completions.create(
@@ -48,9 +48,9 @@ def resp_parse(response):
 
 
 
-def worker(prompt, api_key):
+def worker(prompt, api_key, base_url):
     try:
-        return GPT_inference(prompt, key=api_key)
+        return GPT_inference(prompt, key=api_key, base_url=base_url)
     except Exception as e:
         logger.error(f"Error calling GPT: {e}")
         return None
@@ -78,7 +78,7 @@ class GPTJudge:
         else:
             raise ValueError('Unknown policy model')
 
-    def evaluate(self, QApairs, api_key="EMPTY"):
+    def evaluate(self, QApairs, api_key="EMPTY", base_url="https://api.openai.com/v1"):
         def extract_content(tag, text):
             start_idx = text.find(tag)
             if start_idx == -1:
@@ -143,7 +143,7 @@ class GPTJudge:
             for QApair in tqdm(QApairs):
                 prompt = judge_template % QApair
                 try:
-                    response = GPT_inference(prompt, key=api_key)
+                    response = GPT_inference(prompt, key=api_key, base_url=base_url)
                 except Exception as e:
                     logger.error(f"Error calling GPT: {e}")
                     response = None
@@ -156,7 +156,7 @@ class GPTJudge:
                 #     except Exception as e:
                 #         logger.error(f"Error calling GPT: {e}")
                 #         return None
-                worker_with_key = partial(worker, api_key=api_key)
+                worker_with_key = partial(worker, api_key=api_key, base_url=base_url)
                 responses = pool.map(worker_with_key, [judge_template % QApair for QApair in QApairs])
                 # responses = pool.map(worker, [judge_template % QApair for QApair in QApairs])
 
@@ -205,6 +205,8 @@ def parse_args():
                         help="Number of processes to use for parallel evaluation. Use 1 for single-process.")
     parser.add_argument("--api_key", type=str, default="EMPTY",
                         help="API key for GPT inference (optional if server doesn't require it).")
+    parser.add_argument("--base_url", type=str, default="https://api.openai.com/v1",
+                        help="Base URL for the API. Default is OpenAI's API URL.")
 
     args = parser.parse_args()
 
@@ -230,29 +232,25 @@ if __name__ == "__main__":
             response = item["generation"]
             QApairs.append((instruction, response))
 
-        # if len(QApairs) > 3:
-        #     break
-    
-    # pdb.set_trace()
-
 
     judger = GPTJudge(policy_model=args.policy_model, mp=args.num_processes, judge_model_name=args.judge_model)
-    scores, reasons = judger.evaluate(QApairs, api_key=args.api_key)
+    scores, reasons = judger.evaluate(QApairs, api_key=args.api_key, base_url=args.base_url)
 
-    print("Scores:", scores)
-    print("Reasons:", reasons)
+    # print("Scores:", scores)
+    # print("Reasons:", reasons)
 
     judger.score_parse(scores)
 
-    if args.output_file:
-        results = {
-            "scores": scores,
-            "reasons": reasons,
-            "statistics": {
-                "average_score": sum(scores) / len(scores),
-                "score_distribution": [scores.count(i) for i in range(1, 6)]
-            }
+
+    os.makedirs(os.path.dirname(args.output_file), exist_ok=True)
+    results = {
+        "scores": scores,
+        "reasons": reasons,
+        "statistics": {
+            "average_score": sum(scores) / len(scores),
+            "score_distribution": [scores.count(i) for i in range(1, 6)]
         }
-        with open(args.output_file, 'w', encoding='utf-8') as f:
-            json.dump(results, f, indent=2, ensure_ascii=False)
-        logger.info(f"Evaluation results saved to {args.output_file}")
+    }
+    with open(args.output_file, 'w', encoding='utf-8') as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
+    logger.info(f"Evaluation results saved to {args.output_file}")
