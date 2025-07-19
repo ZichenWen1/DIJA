@@ -1,10 +1,8 @@
 #!/bin/bash
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate harmbench
 
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+# export CUDA_VISIBLE_DEVICES=0,1,2,3
 
-cd ~/DIJA/run_harmbench/refine_prompt
+cd $HOME/DIJA/run_harmbench/refine_prompt
 
 version=$1
 hf_model_path="$HOME/hf_models/Qwen2.5-7B-Instruct"
