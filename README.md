@@ -158,3 +158,7 @@ We would like to express our sincere gratitude to the open-source contributions 
 We are deeply appreciative of the open-source efforts by the developers of [HarmBench](https://github.com/centerforaisafety/HarmBench), [JailbreakBench](https://github.com/JailbreakBench/jailbreakbench), and [StrongREJECT](https://github.com/dsbowen/strong_reject).
 
 
+## 📩 Contact
+For any questions about our paper or code, please email `zichen.wen@outlook.com`.
+
+
