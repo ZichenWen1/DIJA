@@ -157,8 +157,8 @@ class GPTJudge:
                 #         logger.error(f"Error calling GPT: {e}")
                 #         return None
                 worker_with_key = partial(worker, api_key=api_key, base_url=base_url)
-                responses = pool.map(worker_with_key, [judge_template % QApair for QApair in QApairs])
-                # responses = pool.map(worker, [judge_template % QApair for QApair in QApairs])
+                prompts = [judge_template % QApair for QApair in QApairs]
+                responses = list(tqdm(pool.imap(worker_with_key, prompts), total=len(prompts)))
 
         contents = [resp_parse(response)[0] if response is not None else "#thescore: 1\n#thereason: None" for response in responses]
         scores = [extract_content("#thescore:", content) for content in contents]
@@ -226,7 +226,7 @@ if __name__ == "__main__":
 
     for category in data:
         for item in data[category]:
-            raw_instruction = item["prompt"]
+            raw_instruction = item["Behavior"]
             # instruction = extract_instruction(raw_instruction)
             instruction = raw_instruction
             response = item["generation"]
