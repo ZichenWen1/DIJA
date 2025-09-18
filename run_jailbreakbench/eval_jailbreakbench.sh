@@ -12,6 +12,9 @@ model_name=$3
 version=$4
 together_api_key=""  # TODO: set your Together API key here
 
+API_KEY="" # TODO: Set your OpenAI API key here
+BASE_URL="" # TODO: Set your OpenAI API base URL here if needed
+
 # Automatically select an idle GPU
 export CUDA_VISIBLE_DEVICES=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | awk '{if ($1 == 0) print NR-1}' | head -n 1)
 echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
@@ -86,5 +89,16 @@ echo "Running JailbreakBench ASR-k..."
 python eval_metric/evaluate_completions_asr_k.py \
     --json_path "${save_path}" \
 
+# TODO: Run Harmfulness Score
+echo "Running Harmfulness Score..."
+harmfulness_save_path="$HOME/DIJA/run_jailbreakbench/eval_results/harmfulness_score/${model_name}_${attack_method}_${defense_method}_${version}.json"
+python eval_metric/harmfulscore.py \
+    --input_file "${save_path}" \
+    --output_file "${harmfulness_save_path}" \
+    --judge_model "gpt-4o" \
+    --policy_model "gpt-4o" \
+    --num_processes 50 \
+    --api_key "${API_KEY}" \
+    --base_url "${BASE_URL}"
 
 echo "All steps completed successfully."
