@@ -131,7 +131,7 @@ Haoyun Xu<sup>1</sup>,
 ## 📌 TODO
 - [x] Release Inference and Evaluation Code
 - [ ] Support DiffuCoder, Dream-Coder
-- [ ] Release the interleaved mask-text prompt
+- [x] Release the interleaved mask-text prompt
 
 ## 🔑 License
 
