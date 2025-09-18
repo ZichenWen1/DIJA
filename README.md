@@ -31,11 +31,14 @@ Haoyun Xu<sup>1</sup>,
 
 [![arXiv](https://img.shields.io/badge/Arxiv-2507.11097-AD1C18.svg?logo=arXiv)](https://arxiv.org/pdf/2507.11097)
 [![](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FZichenWen1%2FDART&count_bg=%23C25AE6&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Visitor&edge_flat=false)](https://hits.seeyoufarm.com)
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellow)](https://github.com/ZichenWen1/DIJA/blob/main/LICENSE) 
+[![zhihu](https://img.shields.io/badge/-WeChat@量子位-000000?logo=wechat&logoColor=07C160)](https://mp.weixin.qq.com/s/nfyZFXN7ku07_9tTzG-W9Q)
 [![GitHub issues](https://img.shields.io/github/issues/ZichenWen1/DIJA?color=critical&label=Issues)](https://github.com/ZichenWen1/DIJA/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/ZichenWen1/DIJA?style=social)](https://github.com/ZichenWen1/DIJA/stargazers)
 </div>
 
 ## 📰 News
+* **`2025.07.21`** 🤗🤗 Our paper is honored to be the [#1 Paper of the day](https://huggingface.co/papers/2507.11097)!
 * **`2025.07.16`** 🤗🤗 We release our latest work [DIJA](https://arxiv.org/pdf/2507.11097), the **first investigation** into the safety issues of dLLMs. [Code](https://github.com/ZichenWen1/DIJA) is available!
 
 ## 👀 Overview
@@ -127,7 +130,8 @@ Haoyun Xu<sup>1</sup>,
 
 ## 📌 TODO
 - [x] Release Inference and Evaluation Code
-- [ ] Support DiffuCoder, Dream-Coder 
+- [ ] Support DiffuCoder, Dream-Coder
+- [ ] Release the interleaved mask-text prompt
 
 ## 🔑 License
 
@@ -152,5 +156,9 @@ We would like to express our sincere gratitude to the open-source contributions 
 
 ### Jailbreak Benchmarks  
 We are deeply appreciative of the open-source efforts by the developers of [HarmBench](https://github.com/centerforaisafety/HarmBench), [JailbreakBench](https://github.com/JailbreakBench/jailbreakbench), and [StrongREJECT](https://github.com/dsbowen/strong_reject).
+
+
+## 📩 Contact
+For any questions about our paper or code, please email `zichen.wen@outlook.com`.
 
 
