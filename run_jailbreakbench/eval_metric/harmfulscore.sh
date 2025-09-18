@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-cd $HOME/DIJA/run_jailbreakbench
+cd $HOME/DIJA/run_jailbreakbench/eval_metric/
 
 model_name=$1 # victim model--dLLMs
 attack_method=$2
@@ -12,7 +12,7 @@ INPUT_FILE="$HOME/DIJA/run_jailbreakbench/eval_results/eval_results_${model_name
 OUTPUT_FILE="$HOME/DIJA/run_jailbreakbench/eval_results/harmfulness_score/${model_name}_${attack_method}_${defense_method}_${version}.json"
 JUDGE_MODEL="gpt-4o"
 POLICY_MODEL="gpt-4o"
-NUM_PROCESSES=100
+NUM_PROCESSES=50
 API_KEY=""  # TODO: Set your OpenAI API key here
 BASE_URL="" # TODO: Set your OpenAI API base URL here if needed
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-cd $HOME/DIJA/run_strongreject
+cd $HOME/DIJA/run_strongreject/eval_metric/
 
 model_name=$1 # victim model--dLLMs
 attack_method=$2

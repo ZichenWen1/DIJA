@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-cd $HOME/DIJA/run_harmbench
+cd $HOME/DIJA/run_harmbench/eval_metric/
 
 model_name=$1 # victim model--dLLMs
 attack_method=$2
@@ -12,7 +12,7 @@ INPUT_FILE="$HOME/DIJA/run_harmbench/eval_results/eval_results_${model_name}_${a
 OUTPUT_FILE="$HOME/DIJA/run_harmbench/eval_results/harmfulness_score/${model_name}_${attack_method}_${defense_method}_${version}.json"
 JUDGE_MODEL="gpt-4o"
 POLICY_MODEL="gpt-4o"
-NUM_PROCESSES=400
+NUM_PROCESSES=100
 API_KEY=""  # TODO: Set your OpenAI API key here
 BASE_URL="" # TODO: Set your OpenAI API base URL here if needed
 
