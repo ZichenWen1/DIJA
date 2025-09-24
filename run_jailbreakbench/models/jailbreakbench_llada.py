@@ -154,7 +154,7 @@ def main():
             Refined_goal = item["refined_goal"]
 
             # Choose refined or vanilla goal
-            if args.attack_method == "DIJA" or "refine" in args.attack_prompt:
+            if args.attack_method == "DIJA": #or "refine" in args.attack_prompt:
                 goal = item["refined_goal"]
             else:
                 goal = item["goal"]

@@ -143,8 +143,7 @@ def main():
             refined_behavior = item.get('Refined_behavior', '')
 
             behavior = (
-                refined_behavior if args.attack_method == "DIJA" or "refine" in args.attack_prompt
-                else vanilla_behavior
+                refined_behavior if args.attack_method == "DIJA" else vanilla_behavior
             )
 
             prompt = prepare_prompt(tokenizer, behavior, is_mmada_model)

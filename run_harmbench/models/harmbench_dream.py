@@ -140,7 +140,7 @@ def main():
             refined_behavior = item.get('Refined_behavior', '')
 
             # Choose behavior
-            if args.attack_method == "DIJA" or "refine" in args.attack_prompt:
+            if args.attack_method == "DIJA": #or "refine" in args.attack_prompt:
                 behavior = refined_behavior
             else:
                 behavior = vanilla_behavior
