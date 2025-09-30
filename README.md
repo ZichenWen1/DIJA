@@ -133,6 +133,7 @@ Haoyun Xu<sup>1</sup>,
 - [x] Release Inference and Evaluation Code
 - [x] Support DiffuCoder, Dream-Coder
 - [x] Release the interleaved mask-text prompt
+- [ ] Support AdvBench evaluation
 
 ## 🔑 License
 
