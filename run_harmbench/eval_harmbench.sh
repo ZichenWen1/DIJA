@@ -42,6 +42,34 @@ elif [[ "$model_name" == *"dream_instruct"* ]]; then
     gen_length=64
     mask_id=151666
     mask_counts=36
+elif [[ "$model_name" == *"dream_coder_instruct"* ]]; then
+    model_path="$HOME/DIJA/hf_models/Dream-Coder-v0-Instruct-7B"  # TODO: Update this path
+    python_script="models/harmbench_dream.py"
+    steps=64
+    gen_length=64
+    mask_id=151666
+    mask_counts=36
+elif [[ "$model_name" == *"dreamon_instruct"* ]]; then
+    model_path="$HOME/DIJA/hf_models/DreamOn-v0-7B"  # TODO: Update this path
+    python_script="models/harmbench_dream.py"
+    steps=64
+    gen_length=64
+    mask_id=151666
+    mask_counts=36
+elif [[ "$model_name" == *"diffucoder_instruct"* ]]; then
+    model_path="$HOME/DIJA/hf_models/DiffuCoder-7B-Instruct"  # TODO: Update this path
+    python_script="models/harmbench_dream.py"
+    steps=64
+    gen_length=64
+    mask_id=151666
+    mask_counts=36
+elif [[ "$model_name" == *"diffucoder_cpgrpo"* ]]; then
+    model_path="$HOME/DIJA/hf_models/DiffuCoder-7B-cpGRPO"  # TODO: Update this path
+    python_script="models/harmbench_dream.py"
+    steps=64
+    gen_length=64
+    mask_id=151666
+    mask_counts=36
 elif [[ "$model_name" == *"mmada_mixcot"* ]]; then
     model_path="$HOME/DIJA/hf_models/MMaDA-8B-MixCoT"  # TODO: Update this path
     python_script="models/harmbench_mmada.py"
