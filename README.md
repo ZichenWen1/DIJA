@@ -38,6 +38,7 @@ Haoyun Xu<sup>1</sup>,
 </div>
 
 ## 📰 News
+* **`2025.09.30`** 🤗🤗 DIJA now supports Dream-Coder-v0-Instruct-7B, DiffuCoder-7B-Instruct, and DiffuCoder-7B-cpGRPO!
 * **`2025.07.21`** 🤗🤗 Our paper is honored to be the [#1 Paper of the day](https://huggingface.co/papers/2507.11097)!
 * **`2025.07.16`** 🤗🤗 We release our latest work [DIJA](https://arxiv.org/pdf/2507.11097), the **first investigation** into the safety issues of dLLMs. [Code](https://github.com/ZichenWen1/DIJA) is available!
 
