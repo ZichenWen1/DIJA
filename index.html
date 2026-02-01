@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIJA - The Devil behind the mask</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e, #16213e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.5), 0 0 60px rgba(239, 68, 68, 0.3);
+        }
+        
+        .mask-icon {
+            animation: maskPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes maskPulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        .float {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+        
+        .stat-number {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Author styling */
+        .author-name {
+            font-size: 1rem;
+            line-height: 1.5;
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        .author-name sup {
+            font-size: 0.7rem;
+            vertical-align: super;
+            margin-left: 2px;
+            color: #9ca3af;
+        }
+        
+        .author-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.1rem 0.3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            justify-items: center;
+        }
+        
+        @media (max-width: 900px) {
+            .author-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                max-width: 600px !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .author-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.1rem 0.2rem !important;
+                max-width: 400px !important;
+            }
+            .author-name {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .affiliation-text {
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+        
+        /* Table styling */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        
+        .data-table th {
+            background: rgba(239, 68, 68, 0.2);
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .data-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .data-table .highlight {
+            background: rgba(239, 68, 68, 0.15);
+            font-weight: 600;
+        }
+        
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            border-color: transparent;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f0c29;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #ef4444;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="gradient-bg text-white min-h-screen overflow-x-hidden">
+    <canvas id="particles"></canvas>
+    
+    <nav class="fixed top-0 w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-mask text-red-500 text-2xl mask-icon"></i>
+                    <span class="font-bold text-xl tracking-wider">DIJA</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#abstract" class="hover:text-red-400 transition">Abstract</a>
+                    <a href="#method" class="hover:text-red-400 transition">Method</a>
+                    <a href="#results" class="hover:text-red-400 transition">Results</a>
+                    <a href="#tables" class="hover:text-red-400 transition">Tables</a>
+                    <a href="#bibtex" class="hover:text-red-400 transition">BibTeX</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://github.com/ZichenWen1/DIJA" target="_blank" class="glass px-4 py-2 rounded-full hover:bg-white/10 transition">
+                        <i class="fab fa-github mr-2"></i>Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center justify-center pt-16 z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 mb-8 reveal">
+                <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>
+                <span class="text-red-300 text-sm font-medium">⚠️ This paper contains content that may be offensive and disturbing in nature</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 reveal">
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-orange-400 to-red-500 glow-text">
+                    The Devil behind the mask
+                </span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 reveal">
+                An emergent safety vulnerability of <span class="text-red-400 font-semibold">Diffusion LLMs</span>
+            </p>
+            
+            <div class="flex justify-center mb-8 reveal">
+                <div class="glass px-6 py-3 rounded-full" style="box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);">
+                    <span class="text-purple-300 font-semibold">
+                        <i class="fas fa-award mr-2"></i>ICLR 2026 Accepted
+                    </span>
+                </div>
+            </div>
+            
+            <div class="mb-8 reveal px-4">
+                <div class="author-grid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.1rem 0.3rem; max-width: 900px; margin: 0 auto; justify-items: center;">
+                    <div class="author-name"><span class="text-white font-medium">Zichen Wen</span><sup>1,2</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Jiashu Qu</span><sup>2</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Zhaorun Chen</span><sup>3</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Xiaoya Lu</span><sup>2</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Dongrui Liu</span><sup>2*</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Zhiyuan Liu</span><sup>1,2</sup></div>
+                </div>
+                <div class="author-grid mt-1" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.1rem 0.3rem; max-width: 900px; margin: 0 auto; justify-items: center;">
+                    <div class="author-name"><span class="text-white font-medium">Ruixi Wu</span><sup>1,2</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Yicun Yang</span><sup>1</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Xiangqi Jin</span><sup>1</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Haoyun Xu</span><sup>1</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Xuyang Liu</span><sup>1</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Weijia Li</span><sup>2</sup></div>
+                </div>
+                <div class="author-grid mt-1" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.1rem 0.3rem; max-width: 600px; margin: 0 auto; justify-items: center;">
+                    <div class="author-name"><span class="text-white font-medium">Chaochao Lu</span><sup>2</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Jing Shao</span><sup>2</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Conghui He</span><sup>2†</sup></div>
+                    <div class="author-name"><span class="text-white font-medium">Linfeng Zhang</span><sup>1†</sup></div>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-1 affiliation-text mt-5">
+                    <span><sup>1</sup>EPIC Lab, Shanghai Jiao Tong University</span>
+                    <span><sup>2</sup>Shanghai AI Laboratory</span>
+                    <span><sup>3</sup>University of Chicago</span>
+                </div>
+                <div class="affiliation-text mt-2 text-center">
+                    <sup>*</sup>Project Lead &nbsp;&nbsp; <sup>†</sup>Corresponding Authors
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 reveal">
+                <a href="https://arxiv.org/pdf/2507.11097" target="_blank" 
+                   class="btn-glow bg-gradient-to-r from-red-600 to-red-500 px-8 py-3 rounded-full font-semibold text-white hover:from-red-500 hover:to-red-400 transition flex items-center">
+                    <i class="fas fa-file-pdf mr-2"></i>Paper
+                </a>
+                <a href="https://github.com/ZichenWen1/DIJA" target="_blank"
+                   class="glass px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition flex items-center">
+                    <i class="fab fa-github mr-2"></i>Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="abstract" class="pt-8 pb-20 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400">Abstract</span>
+            </h2>
+            <div class="glass-card rounded-2xl p-8 reveal">
+                <p class="text-gray-300 leading-relaxed text-lg">
+                    Diffusion-based large language models (dLLMs) have recently emerged as a powerful alternative to autoregressive LLMs, offering faster inference and greater interactivity via parallel decoding and bidirectional modeling. However, despite strong performance in code generation and text infilling, we identify a <span class="text-red-400 font-semibold">fundamental safety concern</span>: existing alignment mechanisms fail to safeguard dLLMs against context-aware, masked-input adversarial prompts, exposing novel vulnerabilities.
+                </p>
+                <p class="text-gray-300 leading-relaxed text-lg mt-4">
+                    To this end, we present <span class="font-bold text-white">DIJA</span>, the first systematic study and jailbreak attack framework that exploits unique safety weaknesses of dLLMs. Our proposed DIJA constructs adversarial interleaved mask-text prompts that exploit the text generation mechanisms of dLLMs—bidirectional modeling drives the model to produce contextually consistent outputs for masked spans, even when harmful, while parallel decoding limits model dynamic filtering.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="method" class="py-20 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Key Insights</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-12 reveal">How DIJA exploits Diffusion LLMs' unique vulnerabilities</p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-6">
+                        <i class="fas fa-arrows-alt-h text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Bidirectional Modeling</h3>
+                    <p class="text-gray-400">
+                        Diffusion LLMs process text bidirectionally, driving the model to produce contextually consistent outputs for masked spans—even when the content is harmful. This bypasses unidirectional safety alignment.
+                    </p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Parallel Decoding</h3>
+                    <p class="text-gray-400">
+                        Unlike autoregressive models that can dynamically filter content token-by-token, parallel decoding in dLLMs limits the model's ability to apply rejection sampling or dynamic safety checks during generation.
+                    </p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-6">
+                        <i class="fas fa-mask text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Interleaved Mask-Text Prompts</h3>
+                    <p class="text-gray-400">
+                        DIJA constructs adversarial prompts with strategically placed [MASK] tokens that exploit the model's infilling capability to generate harmful completions while appearing benign to safety filters.
+                    </p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Alignment Bypass</h3>
+                    <p class="text-gray-400">
+                        Standard safety alignment mechanisms fail on dLLMs because they were designed for autoregressive generation. DIJA exposes this fundamental architectural vulnerability requiring new defense strategies.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Broader Applications -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-center mb-6 reveal">
+                    <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>Broader Applications
+                </h3>
+                <p class="text-center text-gray-400 mb-6 reveal">Beyond security research, the masking technique enables various useful applications</p>
+                <div class="glass-card rounded-2xl p-4 reveal">
+                    <div class="grid md:grid-cols-3 gap-4 text-center">
+                        <div class="p-4">
+                            <i class="fas fa-edit text-blue-400 text-2xl mb-2"></i>
+                            <h4 class="font-semibold mb-1">Text Editing</h4>
+                            <p class="text-sm text-gray-400">Instruction rewriting and grammar correction via selective masking</p>
+                        </div>
+                        <div class="p-4">
+                            <i class="fas fa-code text-green-400 text-2xl mb-2"></i>
+                            <h4 class="font-semibold mb-1">Structured Generation</h4>
+                            <p class="text-sm text-gray-400">JSON/YAML format generation with masked field completion</p>
+                        </div>
+                        <div class="p-4">
+                            <i class="fas fa-database text-purple-400 text-2xl mb-2"></i>
+                            <h4 class="font-semibold mb-1">Info Extraction</h4>
+                            <p class="text-sm text-gray-400">Structured information extraction from unstructured text</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="py-20 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">Key Results</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-12 reveal">State-of-the-art attack success rates on Diffusion LLMs</p>
+            
+            <!-- Key Statistics with Clear Benchmark Attribution -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="glass-card rounded-2xl p-8 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold stat-number mb-2">100%</div>
+                    <div class="text-gray-400 text-sm">Keyword-based ASR</div>
+                    <div class="text-gray-500 text-xs mt-1">on Dream-Instruct (JailbreakBench)</div>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold stat-number mb-2">90.0%</div>
+                    <div class="text-gray-400 text-sm">Evaluator-based ASR</div>
+                    <div class="text-gray-500 text-xs mt-1">on Dream-Instruct (JailbreakBench)</div>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold stat-number mb-2">+78.5%</div>
+                    <div class="text-gray-400 text-sm">Over ReNeLLM</div>
+                    <div class="text-gray-500 text-xs mt-1">on JailbreakBench (Avg. ASR-e)</div>
+                </div>
+            </div>
+            
+            <!-- Visualization Grid -->
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                
+                <!-- Chart 1: Main Benchmark Comparison (Bar Chart Style) -->
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h4 class="font-semibold mb-4 text-center text-sm">
+                        <i class="fas fa-chart-bar text-blue-400 mr-2"></i>JailbreakBench: DIJA vs Baselines
+                    </h4>
+                    <div class="space-y-2">
+                        <!-- Grid: Label | Bar | Value -->
+                        <div class="grid items-center gap-2" style="grid-template-columns: 3.5rem 1fr 2.5rem;">
+                            <span class="text-xs text-right font-medium">DIJA*</span>
+                            <div class="bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="bg-gradient-to-r from-red-600 to-red-400 h-4 rounded-full flex items-center justify-end pr-1.5" style="width: 90%">
+                                    <span class="text-[10px] font-bold text-white">90%</span>
+                                </div>
+                            </div>
+                            <span></span>
+                        </div>
+                        <div class="grid items-center gap-2" style="grid-template-columns: 3.5rem 1fr 2.5rem;">
+                            <span class="text-xs text-right">DIJA</span>
+                            <div class="bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-orange-400 h-4 rounded-full flex items-center justify-end pr-1.5" style="width: 88%">
+                                    <span class="text-[10px] text-white">88%</span>
+                                </div>
+                            </div>
+                            <span></span>
+                        </div>
+                        <div class="grid items-center gap-2" style="grid-template-columns: 3.5rem 1fr 2.5rem;">
+                            <span class="text-xs text-right text-gray-400">ReNeLLM</span>
+                            <div class="bg-gray-700 rounded-full h-4">
+                                <div class="bg-gray-500 h-4 rounded-full" style="width: 11.5%"></div>
+                            </div>
+                            <span class="text-xs text-gray-400">11.5%</span>
+                        </div>
+                        <div class="grid items-center gap-2" style="grid-template-columns: 3.5rem 1fr 2.5rem;">
+                            <span class="text-xs text-right text-gray-500">GCG</span>
+                            <div class="bg-gray-700 rounded-full h-4">
+                                <div class="bg-gray-600 h-4 rounded-full" style="width: 5.2%"></div>
+                            </div>
+                            <span class="text-xs text-gray-500">5.2%</span>
+                        </div>
+                        <div class="grid items-center gap-2" style="grid-template-columns: 3.5rem 1fr 2.5rem;">
+                            <span class="text-xs text-right text-gray-500">Others</span>
+                            <div class="bg-gray-700 rounded-full h-4">
+                                <div class="bg-gray-700 h-4 rounded-full" style="width: 1%"></div>
+                            </div>
+                            <span class="text-xs text-gray-500">~0%</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">ASR-e on Dream-Instruct (JailbreakBench)</p>
+                </div>
+
+                <!-- Chart 2: Multi-Model Performance (Horizontal Comparison) -->
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h4 class="font-semibold mb-4 text-center text-sm">
+                        <i class="fas fa-layer-group text-purple-400 mr-2"></i>DIJA Performance Across Models
+                    </h4>
+                    <div class="grid grid-cols-4 gap-2 text-center">
+                        <div class="bg-gray-800/50 rounded-lg p-3">
+                            <div class="text-2xl font-bold text-red-400">95%</div>
+                            <div class="text-xs text-gray-400 mt-1">LLaDA-8B</div>
+                        </div>
+                        <div class="bg-gray-800/50 rounded-lg p-3">
+                            <div class="text-2xl font-bold text-orange-400">94%</div>
+                            <div class="text-xs text-gray-400 mt-1">LLaDA-1.5</div>
+                        </div>
+                        <div class="bg-gray-800/50 rounded-lg p-3 border-2 border-red-500/30">
+                            <div class="text-2xl font-bold text-red-500">99%</div>
+                            <div class="text-xs text-gray-400 mt-1">Dream</div>
+                        </div>
+                        <div class="bg-gray-800/50 rounded-lg p-3">
+                            <div class="text-2xl font-bold text-orange-400">98%</div>
+                            <div class="text-xs text-gray-400 mt-1">MMaDA</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Keyword-based ASR across different dLLMs</p>
+                </div>
+
+                <!-- Chart 3: Benchmark Coverage (Grid Style) -->
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h4 class="font-semibold mb-4 text-center text-sm">
+                        <i class="fas fa-th text-green-400 mr-2"></i>Performance Across Benchmarks
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">JailbreakBench</span>
+                            <div class="flex gap-1">
+                                <span class="px-2 py-1 bg-red-500/20 rounded text-xs">90% ASR-e</span>
+                                <span class="px-2 py-1 bg-red-500/20 rounded text-xs">100% ASR-k</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">HarmBench</span>
+                            <div class="flex gap-1">
+                                <span class="px-2 py-1 bg-orange-500/20 rounded text-xs">60.5% ASR-e</span>
+                                <span class="px-2 py-1 bg-orange-500/20 rounded text-xs">99% ASR-k</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">StrongREJECT</span>
+                            <div class="flex gap-1">
+                                <span class="px-2 py-1 bg-yellow-500/20 rounded text-xs">52.2 SRS</span>
+                                <span class="px-2 py-1 bg-yellow-500/20 rounded text-xs">99.7% ASR-k</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">DIJA* performance on Dream-Instruct</p>
+                </div>
+
+                <!-- Chart 4: Capability Radar (Hexagon Style) -->
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h4 class="font-semibold mb-4 text-center text-sm">
+                        <i class="fas fa-shield-alt text-red-400 mr-2"></i>Defense Robustness
+                    </h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs w-24">No Defense</span>
+                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 99%"></div>
+                            </div>
+                            <span class="text-xs w-10 text-right">99%</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs w-24">Self-Reminder</span>
+                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 98%"></div>
+                            </div>
+                            <span class="text-xs w-10 text-right">98%</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs w-24">RPO Defense</span>
+                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 87%"></div>
+                            </div>
+                            <span class="text-xs w-10 text-right">87%</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">DIJA maintains high ASR even with defenses</p>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-center mb-8 reveal">Figure Gallery</h3>
+            
+            <!-- Defense Results - Full Width -->
+            <div class="glass-card rounded-2xl p-6 reveal hover:scale-[1.01] transition-transform cursor-pointer mb-6" onclick="openModal('fig_attack_with_defense.jpg')">
+                <h4 class="font-semibold mb-4 text-center flex items-center justify-center">
+                    <i class="fas fa-shield-virus text-red-400 mr-2"></i>DIJA Against Defense Methods
+                </h4>
+                <div class="overflow-hidden rounded-lg bg-gray-800/50" style="height: 280px;">
+                    <img src="fig_attack_with_defense.jpg" alt="DIJA Against Defense" class="w-full h-full object-cover">
+                </div>
+                <p class="text-xs text-gray-500 mt-3 text-center">DIJA maintains high attack success rate even against various defense mechanisms</p>
+            </div>
+            
+            <!-- Figure Gallery - 2x2 Grid with consistent sizing -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Card 1: DIJA vs PAIR -->
+                <div class="glass-card rounded-2xl p-5 reveal hover:scale-[1.02] transition-transform cursor-pointer" onclick="openModal('fig2_vs_pair.png')">
+                    <h4 class="font-semibold mb-3 text-center flex items-center justify-center text-sm">
+                        <i class="fas fa-bolt text-yellow-400 mr-2"></i>DIJA vs PAIR Attack Cases
+                    </h4>
+                    <div class="overflow-hidden rounded-lg bg-gray-800/50" style="height: 220px;">
+                        <img src="fig2_vs_pair.png" alt="DIJA vs PAIR" class="w-full h-full object-cover object-top">
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Click to view full image</p>
+                </div>
+                
+                <!-- Card 2: dLLM vs AR LLM -->
+                <div class="glass-card rounded-2xl p-5 reveal hover:scale-[1.02] transition-transform cursor-pointer" onclick="openModal('fig1_comparison.png')">
+                    <h4 class="font-semibold mb-3 text-center flex items-center justify-center text-sm">
+                        <i class="fas fa-exchange-alt text-blue-400 mr-2"></i>Diffusion LLM vs Auto-Regressive LLM
+                    </h4>
+                    <div class="overflow-hidden rounded-lg bg-gray-800/50" style="height: 220px;">
+                        <img src="fig1_comparison.png" alt="dLLM vs AR LLM" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Click to view full image</p>
+                </div>
+                
+                <!-- Card 3: ASR Results -->
+                <div class="glass-card rounded-2xl p-5 reveal hover:scale-[1.02] transition-transform cursor-pointer" onclick="openModal('fig3_asr.png')">
+                    <h4 class="font-semibold mb-3 text-center flex items-center justify-center text-sm">
+                        <i class="fas fa-chart-line text-green-400 mr-2"></i>Attack Success Rate by Evaluator
+                    </h4>
+                    <div class="overflow-hidden rounded-lg bg-gray-800/50" style="height: 220px;">
+                        <img src="fig3_asr.png" alt="ASR Results" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Click to view full image</p>
+                </div>
+                
+                <!-- Card 4: Mask Token Analysis -->
+                <div class="glass-card rounded-2xl p-5 reveal hover:scale-[1.02] transition-transform cursor-pointer" onclick="openModal('fig4_mask_tokens.png')">
+                    <h4 class="font-semibold mb-3 text-center flex items-center justify-center text-sm">
+                        <i class="fas fa-mask text-purple-400 mr-2"></i>Mask Token Number Analysis
+                    </h4>
+                    <div class="overflow-hidden rounded-lg bg-gray-800/50" style="height: 220px;">
+                        <img src="fig4_mask_tokens.png" alt="Mask Token Analysis" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Click to view full image</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tables" class="py-20 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-green-400">Main Results</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-8 reveal">Detailed evaluation across multiple benchmarks</p>
+            
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8 reveal">
+                <button class="tab-btn active" onclick="switchTab('jailbreak')">
+                    <i class="fas fa-lock-open mr-2"></i>JailbreakBench
+                </button>
+                <button class="tab-btn" onclick="switchTab('harm')">
+                    <i class="fas fa-shield-virus mr-2"></i>HarmBench
+                </button>
+                <button class="tab-btn" onclick="switchTab('strongreject')">
+                    <i class="fas fa-ban mr-2"></i>StrongREJECT
+                </button>
+            </div>
+            
+            <!-- Tab Content: JailbreakBench -->
+            <div id="jailbreak" class="tab-content active">
+                <div class="glass-card rounded-2xl p-6 reveal overflow-x-auto">
+                    <h3 class="text-lg font-bold mb-4 text-center">JailbreakBench Results</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Method</th>
+                                <th colspan="3">LLaDA-Instruct</th>
+                                <th colspan="3">LLaDA-1.5</th>
+                                <th colspan="3">Dream-Instruct</th>
+                                <th colspan="3">MMaDA-MixCoT</th>
+                            </tr>
+                            <tr>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Zeroshot</td><td>0.0</td><td>0.0</td><td>1.0</td><td>0.0</td><td>1.0</td><td>1.0</td><td>0.0</td><td>0.0</td><td>1.0</td><td>25.0</td><td>33.0</td><td>2.8</td></tr>
+                            <tr><td>GCG</td><td>23.0</td><td>12.0</td><td>1.9</td><td>23.0</td><td>15.0</td><td>2.0</td><td>21.0</td><td>5.2</td><td>1.5</td><td>83.0</td><td>38.5</td><td>3.3</td></tr>
+                            <tr><td>AIM</td><td>0.0</td><td>0.0</td><td>1.0</td><td>0.0</td><td>0.0</td><td>1.0</td><td>0.0</td><td>0.0</td><td>1.0</td><td>17.0</td><td>17.0</td><td>2.5</td></tr>
+                            <tr><td>PAIR</td><td>38.0</td><td>29.0</td><td>3.1</td><td>51.0</td><td>39.0</td><td>3.6</td><td>1.0</td><td>0.0</td><td>1.0</td><td>78.0</td><td>42.0</td><td>4.4</td></tr>
+                            <tr><td>ReNeLLM</td><td>96.0</td><td>80.0</td><td>4.8</td><td>95.0</td><td>76.0</td><td>4.8</td><td>82.7</td><td>11.5</td><td>2.5</td><td>47.0</td><td>4.0</td><td>1.8</td></tr>
+                            <tr class="highlight"><td><b>DIJA</b></td><td>95.0</td><td>81.0</td><td>4.6</td><td>94.0</td><td>79.0</td><td>4.6</td><td>99.0</td><td>90.0</td><td>4.6</td><td>98.0</td><td>79.0</td><td>4.7</td></tr>
+                            <tr class="highlight"><td><b>DIJA*</b></td><td>99.0</td><td>81.0</td><td>4.8</td><td>100.0</td><td>82.0</td><td>4.8</td><td>100.0</td><td>88.0</td><td>4.9</td><td>100.0</td><td>81.0</td><td>4.7</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-gray-500 mt-4 text-center">ASR-k: Keyword-based ASR (%) | ASR-e: Evaluator-based ASR (%) | HS: Harmfulness Score</p>
+                </div>
+            </div>
+            
+            <!-- Tab Content: HarmBench -->
+            <div id="harm" class="tab-content">
+                <div class="glass-card rounded-2xl p-6 reveal overflow-x-auto">
+                    <h3 class="text-lg font-bold mb-4 text-center">HarmBench Results</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Method</th>
+                                <th colspan="3">LLaDA-Instruct</th>
+                                <th colspan="3">LLaDA-1.5</th>
+                                <th colspan="3">Dream-Instruct</th>
+                                <th colspan="3">MMaDA-MixCoT</th>
+                            </tr>
+                            <tr>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                                <th>ASR-k</th><th>ASR-e</th><th>HS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Zeroshot</td><td>49.8</td><td>17.7</td><td>2.8</td><td>48.8</td><td>16.7</td><td>2.9</td><td>2.8</td><td>0.0</td><td>2.8</td><td>87.3</td><td>29.0</td><td>3.4</td></tr>
+                            <tr><td>GCG</td><td>55.3</td><td>24.3</td><td>2.9</td><td>57.8</td><td>28.3</td><td>3.0</td><td>24.2</td><td>6.7</td><td>1.5</td><td>81.0</td><td>19.3</td><td>2.8</td></tr>
+                            <tr><td>AIM</td><td>4.8</td><td>0.0</td><td>1.4</td><td>4.2</td><td>0.0</td><td>1.4</td><td>0.0</td><td>0.0</td><td>1.0</td><td>32.0</td><td>26.0</td><td>2.5</td></tr>
+                            <tr><td>PAIR</td><td>63.7</td><td>43.6</td><td>3.6</td><td>63.5</td><td>41.4</td><td>3.6</td><td>20.2</td><td>1.5</td><td>1.6</td><td>93.0</td><td>40.0</td><td>4.0</td></tr>
+                            <tr><td>ReNeLLM</td><td>98.0</td><td>34.2</td><td>4.5</td><td>95.8</td><td>38.0</td><td>4.5</td><td>83.9</td><td>6.5</td><td>2.7</td><td>42.5</td><td>2.5</td><td>1.8</td></tr>
+                            <tr class="highlight"><td><b>DIJA</b></td><td>96.3</td><td>55.5</td><td>4.1</td><td>95.8</td><td>56.8</td><td>4.1</td><td>98.3</td><td>57.5</td><td>3.9</td><td>97.5</td><td>46.8</td><td>3.9</td></tr>
+                            <tr class="highlight"><td><b>DIJA*</b></td><td>98.0</td><td>60.0</td><td>4.1</td><td>99.3</td><td>58.8</td><td>4.1</td><td>99.0</td><td>60.5</td><td>3.9</td><td>99.0</td><td>47.3</td><td>3.9</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-gray-500 mt-4 text-center">ASR-k: Keyword-based ASR (%) | ASR-e: Evaluator-based ASR (%) | HS: Harmfulness Score</p>
+                </div>
+            </div>
+            
+            <!-- Tab Content: StrongREJECT -->
+            <div id="strongreject" class="tab-content">
+                <div class="glass-card rounded-2xl p-6 reveal overflow-x-auto">
+                    <h3 class="text-lg font-bold mb-4 text-center">StrongREJECT Results</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Method</th>
+                                <th colspan="3">LLaDA-Instruct</th>
+                                <th colspan="3">LLaDA-1.5</th>
+                                <th colspan="3">Dream-Instruct</th>
+                                <th colspan="3">MMaDA-MixCoT</th>
+                            </tr>
+                            <tr>
+                                <th>ASR-k</th><th>SRS</th><th>HS</th>
+                                <th>ASR-k</th><th>SRS</th><th>HS</th>
+                                <th>ASR-k</th><th>SRS</th><th>HS</th>
+                                <th>ASR-k</th><th>SRS</th><th>HS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Zeroshot</td><td>13.1</td><td>13.4</td><td>1.7</td><td>13.4</td><td>14.0</td><td>1.8</td><td>0.0</td><td>0.1</td><td>1.0</td><td>85.6</td><td>30.0</td><td>4.3</td></tr>
+                            <tr><td>GCG</td><td>20.1</td><td>13.3</td><td>1.9</td><td>23.3</td><td>17.2</td><td>2.0</td><td>0.6</td><td>0.2</td><td>1.0</td><td>81.0</td><td>19.3</td><td>3.5</td></tr>
+                            <tr><td>AIM</td><td>0.0</td><td>0.8</td><td>1.0</td><td>0.0</td><td>0.5</td><td>1.0</td><td>0.0</td><td>0.2</td><td>1.0</td><td>25.9</td><td>26.2</td><td>3.1</td></tr>
+                            <tr><td>PAIR</td><td>45.0</td><td>31.5</td><td>2.4</td><td>45.7</td><td>32.3</td><td>2.5</td><td>38.0</td><td>0.8</td><td>1.9</td><td>88.2</td><td>29.4</td><td>4.0</td></tr>
+                            <tr><td>ReNeLLM</td><td>93.3</td><td>57.4</td><td>4.6</td><td>93.6</td><td>60.5</td><td>4.6</td><td>96.8</td><td>14.5</td><td>2.7</td><td>92.7</td><td>9.4</td><td>2.6</td></tr>
+                            <tr class="highlight"><td><b>DIJA</b></td><td>92.7</td><td>60.8</td><td>4.7</td><td>93.3</td><td>61.8</td><td>4.7</td><td>96.6</td><td>49.8</td><td>4.7</td><td>97.1</td><td>43.0</td><td>4.7</td></tr>
+                            <tr class="highlight"><td><b>DIJA*</b></td><td>99.7</td><td>62.4</td><td>4.8</td><td>99.4</td><td>63.3</td><td>4.8</td><td>99.7</td><td>52.2</td><td>4.7</td><td>99.0</td><td>47.6</td><td>4.8</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-gray-500 mt-4 text-center">ASR-k: Keyword-based ASR (%) | SRS: StrongREJECT Score | HS: Harmfulness Score</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bibtex" class="py-20 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-400">BibTeX</span>
+            </h2>
+            <div class="glass-card rounded-2xl p-8 reveal">
+                <pre class="text-base text-gray-300 overflow-x-auto"><code>@article{wen2025dija,
+  title={The Devil behind the mask: An emergent safety vulnerability of Diffusion LLMs},
+  author={Wen, Zichen and Qu, Jiashu and Chen, Zhaorun and Lu, Xiaoya and Liu, Dongrui and Liu, Zhiyuan and Wu, Ruixi and Yang, Yicun and Jin, Xiangqi and Xu, Haoyun and Liu, Xuyang and Li, Weijia and Lu, Chaochao and Shao, Jing and He, Conghui and Zhang, Linfeng},
+  journal={arXiv preprint arXiv:2507.11097},
+  year={2025}
+}</code></pre>
+                <button onclick="copyBibtex()" class="mt-4 glass px-4 py-2 rounded-lg text-sm hover:bg-white/10 transition flex items-center justify-center w-full">
+                    <i class="fas fa-copy mr-2"></i>Copy to Clipboard
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass rounded-2xl p-8 border-yellow-500/30 reveal">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-balance-scale text-yellow-500 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-yellow-400 mb-3">Ethics Statement</h3>
+                        <p class="text-gray-400 text-base leading-relaxed">
+                            Our research identifies a significant safety vulnerability in diffusion-based large language models (dLLMs) and proposes targeted defense solutions. We believe the benefits of disclosing this vulnerability outweigh the risks. Our research was conducted with integrity in a controlled environment to foster safer AI development, and we do not condone the use of our methods to cause harm.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm" onclick="closeModal()">
+        <div class="relative max-w-6xl mx-4">
+            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white hover:text-red-400 transition">
+                <i class="fas fa-times text-3xl"></i>
+            </button>
+            <img id="modalImage" src="" alt="Enlarged figure" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl">
+        </div>
+    </div>
+
+    <footer class="py-12 border-t border-white/10 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <i class="fas fa-mask text-red-500"></i>
+                    <span class="font-bold">DIJA</span>
+                </div>
+                <div class="flex space-x-6 text-gray-400">
+                    <a href="https://github.com/ZichenWen1/DIJA" target="_blank" class="hover:text-white transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="mailto:zichen.wen@outlook.com" class="hover:text-white transition">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-600 text-sm">
+                <p>&copy; 2025 DIJA Team. All rights reserved.</p>
+                <p class="mt-2">EPIC Lab @ SJTU | Shanghai AI Laboratory | University of Chicago</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Particle System with Mouse Interaction
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 60;
+        let mouse = { x: null, y: null, radius: 150 };
+
+        // Track mouse position
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.color = Math.random() > 0.5 ? '239, 68, 68' : '147, 51, 234'; // Red or Purple
+            }
+
+            update() {
+                // Mouse interaction - particles move away from mouse
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouse.radius) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        const directionX = forceDirectionX * force * this.density * 0.6;
+                        const directionY = forceDirectionY * force * this.density * 0.6;
+                        
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    } else {
+                        // Return to base position slowly
+                        if (this.x !== this.baseX) {
+                            let dx = this.x - this.baseX;
+                            this.x -= dx / 20;
+                        }
+                        if (this.y !== this.baseY) {
+                            let dy = this.y - this.baseY;
+                            this.y -= dy / 20;
+                        }
+                    }
+                } else {
+                    // Return to base position when mouse is out
+                    if (this.x !== this.baseX) {
+                        let dx = this.x - this.baseX;
+                        this.x -= dx / 20;
+                    }
+                    if (this.y !== this.baseY) {
+                        let dy = this.y - this.baseY;
+                        this.y -= dy / 20;
+                    }
+                }
+
+                // Boundary check
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Draw connections - stronger when near mouse
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        let opacity = 0.1 * (1 - distance / 120);
+                        
+                        // Increase opacity near mouse
+                        if (mouse.x != null) {
+                            let mouseDx = mouse.x - (particles[i].x + particles[j].x) / 2;
+                            let mouseDy = mouse.y - (particles[i].y + particles[j].y) / 2;
+                            let mouseDist = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+                            if (mouseDist < mouse.radius) {
+                                opacity += 0.2 * (1 - mouseDist / mouse.radius);
+                            }
+                        }
+                        
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(239, 68, 68, ${Math.min(opacity, 0.5)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Draw mouse glow
+            if (mouse.x != null) {
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.1)';
+                ctx.arc(mouse.x, mouse.y, mouse.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Image Modal
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imageSrc;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Copy BibTeX
+        function copyBibtex() {
+            const bibtex = `@article{wen2025dija,
+  title={The Devil behind the mask: An emergent safety vulnerability of Diffusion LLMs},
+  author={Wen, Zichen and Qu, Jiashu and Chen, Zhaorun and Lu, Xiaoya and Liu, Dongrui and Liu, Zhiyuan and Wu, Ruixi and Yang, Yicun and Jin, Xiangqi and Xu, Haoyun and Liu, Xuyang and Li, Weijia and Lu, Chaochao and Shao, Jing and He, Conghui and Zhang, Linfeng},
+  journal={arXiv preprint arXiv:2507.11097},
+  year={2025}
+}`;
+            navigator.clipboard.writeText(bibtex).then(() => {
+                const btn = document.querySelector('button[onclick="copyBibtex()"]');
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy mr-2"></i>Copy to Clipboard';
+                }, 2000);
+            });
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(15, 12, 41, 0.9)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.03)';
+            }
+        });
+    </script>
+</body>
+</html>
